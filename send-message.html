@@ -12,12 +12,7 @@
         <form id="send-message-form">
             <label for="recipient">בחר נמען:</label>
             <select id="recipient" name="recipient" required>
-                <option value="סיון">סיון</option>
-                <option value="נועה">נועה</option>
-                <option value="ינאי">ינאי</option>
-                <option value="אלעד">אלעד</option>
-                <option value="אלון">אלון</option>
-                <option value="מאיה">מאיה</option>
+                <!-- Options will be populated by JavaScript -->
             </select>
             <label for="message">הודעה:</label>
             <textarea id="message" name="message" maxlength="50" required></textarea>
@@ -26,9 +21,29 @@
         <button id="back-button">חזור</button>
     </div>
     <script>
-        // Get the username from the URL parameters
+        // Get the username and rank from the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const username = urlParams.get('username');
+        const rank = urlParams.get('rank');
+
+        // Load profile pictures for recipients
+        const recipients = ['סיון', 'נועה', 'ינאי', 'אלעד', 'אלון', 'מאיה'];
+        const recipientSelect = document.getElementById('recipient');
+        recipientSelect.innerHTML = ''; // Clear existing options
+
+        recipients.forEach(recipient => {
+            const profilePicture = localStorage.getItem(`profilePicture_${recipient}`);
+            const option = document.createElement('option');
+            option.value = recipient;
+            option.textContent = recipient;
+            if (profilePicture) {
+                option.style.backgroundImage = `url(${profilePicture})`;
+                option.style.backgroundSize = '20px 20px';
+                option.style.backgroundRepeat = 'no-repeat';
+                option.style.paddingLeft = '25px';
+            }
+            recipientSelect.appendChild(option);
+        });
 
         // Send message form submit event
         document.getElementById('send-message-form').addEventListener('submit', function(event) {
@@ -42,7 +57,7 @@
             localStorage.setItem('messages', JSON.stringify(messages));
 
             alert('ההודעה נשלחה בהצלחה!');
-            window.location.href = `welcome.html?username=${username}`;
+            window.location.href = `welcome.html?username=${username}&rank=${rank}`;
         });
 
         // Back button click event

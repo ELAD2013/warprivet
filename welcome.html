@@ -9,14 +9,21 @@
 <body>
     <div class="welcome-container">
         <h1 id="welcome-message"></h1>
-        <button id="roles-button">התפקידים שלך</button>
-        <button id="identify-button" style="display: none;">לחץ לזהות מחבלים</button>
-        <button id="send-message-button">לחץ לכתוב הודעה</button>
-        <button id="my-messages-button">ההודעות שלי</button>
+        <div id="profile-picture-container">
+            <img id="profile-picture" src="" alt="Profile Picture">
+            <button id="upload-picture-button">העלה תמונה</button>
+        </div>
+        <div class="button-container">
+            <button id="roles-button">התפקידים שלך</button>
+            <button id="identify-button" style="display: none;">לחץ לזהות מחבלים</button>
+            <button id="send-message-button">לחץ לכתוב הודעה</button>
+            <button id="my-messages-button">ההודעות שלי</button>
+            <button id="logout-button">יציאה מהאתר</button>
+        </div>
         <p id="terrorist-count"></p>
-        <button id="logout-button">יציאה מהאתר</button>
     </div>
     <div id="rank" class="rank-container"></div>
+    <input type="file" id="file-input" style="display: none;">
     <script>
         // Get the username and rank from the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -26,6 +33,12 @@
         // Display the welcome message
         document.getElementById('welcome-message').textContent = `מה תרצה לעשות היום, ${username}?`;
         document.getElementById('rank').textContent = `התפקיד שלך: ${rank}`;
+
+        // Load profile picture
+        const profilePicture = localStorage.getItem(`profilePicture_${username}`);
+        if (profilePicture) {
+            document.getElementById('profile-picture').src = profilePicture;
+        }
 
         // Show the identify button for Noa and Elad
         if (username === 'נועה' || username === 'אלעד') {
@@ -53,22 +66,39 @@
 
         // Roles button click event
         document.getElementById('roles-button').addEventListener('click', function() {
-            window.location.href = `roles.html?username=${username}`;
+            window.location.href = `roles.html?username=${username}&rank=${rank}`;
         });
 
         // Send message button click event
         document.getElementById('send-message-button').addEventListener('click', function() {
-            window.location.href = `send-message.html?username=${username}`;
+            window.location.href = `send-message.html?username=${username}&rank=${rank}`;
         });
 
         // My messages button click event
         document.getElementById('my-messages-button').addEventListener('click', function() {
-            window.location.href = `my-messages.html?username=${username}`;
+            window.location.href = `my-messages.html?username=${username}&rank=${rank}`;
         });
 
         // Logout button click event
         document.getElementById('logout-button').addEventListener('click', function() {
             window.location.href = 'index.html';
+        });
+
+        // Upload picture button click event
+        document.getElementById('upload-picture-button').addEventListener('click', function() {
+            document.getElementById('file-input').click();
+        });
+
+        // File input change event
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataURL = e.target.result;
+                localStorage.setItem(`profilePicture_${username}`, dataURL);
+                document.getElementById('profile-picture').src = dataURL;
+            };
+            reader.readAsDataURL(file);
         });
     </script>
 </body>

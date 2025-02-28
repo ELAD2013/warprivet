@@ -10,13 +10,16 @@
     <div class="messages-container">
         <h1>ההודעות שלי</h1>
         <ul id="messages-list"></ul>
-        <button id="refresh-button">רענן הודעות</button>
-        <button id="back-button">חזור</button>
+        <div class="button-container">
+            <button id="refresh-button">רענן הודעות</button>
+            <button id="back-button">חזור</button>
+        </div>
     </div>
     <script>
-        // Get the username from the URL parameters
+        // Get the username and rank from the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const username = urlParams.get('username');
+        const rank = urlParams.get('rank');
 
         // Function to load messages
         function loadMessages() {
@@ -28,8 +31,9 @@
             const messagesListElement = document.getElementById('messages-list');
             messagesListElement.innerHTML = ''; // Clear the list
             userMessages.forEach((message, index) => {
+                const profilePicture = localStorage.getItem(`profilePicture_${message.from}`);
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<strong>מאת:</strong> ${message.from}<br><strong>הודעה:</strong> ${message.message} <button onclick="deleteMessage(${index})">מחק</button>`;
+                listItem.innerHTML = `<img src="${profilePicture}" alt="Profile Picture" class="profile-picture-small"><strong>מאת:</strong> ${message.from}<br><strong>הודעה:</strong> ${message.message} <button onclick="deleteMessage(${index})">מחק</button>`;
                 messagesListElement.appendChild(listItem);
             });
         }
@@ -51,7 +55,7 @@
 
         // Back button click event
         document.getElementById('back-button').addEventListener('click', function() {
-            window.history.back();
+            window.location.href = `welcome.html?username=${username}&rank=${rank}`;
         });
     </script>
 </body>
