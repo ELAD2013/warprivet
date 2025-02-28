@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שלח הודעה</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="message-container">
+        <h1>שלח הודעה</h1>
+        <form id="send-message-form">
+            <label for="recipient">בחר נמען:</label>
+            <select id="recipient" name="recipient" required>
+                <option value="סיון">סיון</option>
+                <option value="נועה">נועה</option>
+                <option value="ינאי">ינאי</option>
+                <option value="אלעד">אלעד</option>
+                <option value="אלון">אלון</option>
+                <option value="מאיה">מאיה</option>
+            </select>
+            <label for="message">הודעה:</label>
+            <textarea id="message" name="message" maxlength="50" required></textarea>
+            <button type="submit">שלח</button>
+        </form>
+        <button id="back-button">חזור</button>
+    </div>
+    <script>
+        // Get the username from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+
+        // Send message form submit event
+        document.getElementById('send-message-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const recipient = document.getElementById('recipient').value;
+            const message = document.getElementById('message').value;
+
+            // Save the message (for simplicity, using localStorage)
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.push({ from: username, to: recipient, message });
+            localStorage.setItem('messages', JSON.stringify(messages));
+
+            alert('ההודעה נשלחה בהצלחה!');
+            window.location.href = `welcome.html?username=${username}`;
+        });
+
+        // Back button click event
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>

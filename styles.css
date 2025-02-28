@@ -9,7 +9,7 @@ body {
     direction: rtl;
 }
 
-.login-container, .welcome-container, .roles-container {
+.login-container, .welcome-container, .roles-container, .message-container, .messages-container {
     text-align: center;
     background-color: #fff;
     padding: 30px;
@@ -33,7 +33,7 @@ label {
     color: #555;
 }
 
-input {
+input, select, textarea {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;

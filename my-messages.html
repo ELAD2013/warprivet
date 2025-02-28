@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ההודעות שלי</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="messages-container">
+        <h1>ההודעות שלי</h1>
+        <ul id="messages-list"></ul>
+        <button id="refresh-button">רענן הודעות</button>
+        <button id="back-button">חזור</button>
+    </div>
+    <script>
+        // Get the username from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+
+        // Function to load messages
+        function loadMessages() {
+            // Load messages (for simplicity, using localStorage)
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            const userMessages = messages.filter(message => message.to === username);
+
+            // Display the messages
+            const messagesListElement = document.getElementById('messages-list');
+            messagesListElement.innerHTML = ''; // Clear the list
+            userMessages.forEach((message, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong>מאת:</strong> ${message.from}<br><strong>הודעה:</strong> ${message.message} <button onclick="deleteMessage(${index})">מחק</button>`;
+                messagesListElement.appendChild(listItem);
+            });
+        }
+
+        // Delete message function
+        function deleteMessage(index) {
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            const userMessages = messages.filter(message => message.to === username);
+            userMessages.splice(index, 1);
+            localStorage.setItem('messages', JSON.stringify(messages.filter(message => message.to !== username).concat(userMessages)));
+            loadMessages();
+        }
+
+        // Load messages on page load
+        loadMessages();
+
+        // Refresh button click event
+        document.getElementById('refresh-button').addEventListener('click', loadMessages);
+
+        // Back button click event
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>

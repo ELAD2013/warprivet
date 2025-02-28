@@ -11,6 +11,8 @@
         <h1 id="welcome-message"></h1>
         <button id="roles-button">התפקידים שלך</button>
         <button id="identify-button" style="display: none;">לחץ לזהות מחבלים</button>
+        <button id="send-message-button">לחץ לכתוב הודעה</button>
+        <button id="my-messages-button">ההודעות שלי</button>
         <p id="terrorist-count"></p>
         <button id="logout-button">יציאה מהאתר</button>
     </div>
@@ -52,6 +54,16 @@
         // Roles button click event
         document.getElementById('roles-button').addEventListener('click', function() {
             window.location.href = `roles.html?username=${username}`;
+        });
+
+        // Send message button click event
+        document.getElementById('send-message-button').addEventListener('click', function() {
+            window.location.href = `send-message.html?username=${username}`;
+        });
+
+        // My messages button click event
+        document.getElementById('my-messages-button').addEventListener('click', function() {
+            window.location.href = `my-messages.html?username=${username}`;
         });
 
         // Logout button click event

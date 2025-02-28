@@ -8,7 +8,9 @@ document.getElementById('login-form').addEventListener('submit', function(event)
         'סיון': '8888',
         'נועה': '4545',
         'ינאי': '1111',
-        'אלעד': '2013'
+        'אלעד': '2013',
+        'אלון': '4321',
+        'מאיה': '0987'
     };
 
     // User ranks
@@ -16,7 +18,9 @@ document.getElementById('login-form').addEventListener('submit', function(event)
         'סיון': 'פקיד',
         'נועה': 'מנהל',
         'ינאי': 'רמטכ"ל',
-        'אלעד': 'רמטכ"ל'
+        'אלעד': 'רמטכ"ל',
+        'אלון': 'מתחיל',
+        'מאיה': 'מתחיל'
     };
 
     // Validate user
