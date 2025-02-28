@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התפקידים שלך</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="roles-container">
+        <h1 id="roles-title">התפקידים שלך</h1>
+        <ul id="roles-list"></ul>
+        <button id="back-button">חזור</button>
+    </div>
+    <script>
+        // Get the username from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+
+        // User roles
+        const roles = {
+            'סיון': ['רפואה', 'קרב', 'יחידות נוספות בהמשך'],
+            'נועה': ['מדריכת רפואה', 'חבלנות', 'פיקוד מפקדת מחשבים', 'צנחנים', 'קרבי'],
+            'ינאי': ['מפקד מפקד חבלנות', 'מסתערבות', 'קרבי', 'חידות מובחרות'],
+            'אלעד': ['רמטכ"ל', 'מפקד רפואה', 'מנהל מחשבים', 'מפקד צלפות', 'צנחנים']
+        };
+
+        // Display the roles
+        const rolesList = roles[username] || [];
+        const rolesListElement = document.getElementById('roles-list');
+        rolesList.forEach(role => {
+            const listItem = document.createElement('li');
+            listItem.textContent = role;
+            rolesListElement.appendChild(listItem);
+        });
+
+        // Back button click event
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>

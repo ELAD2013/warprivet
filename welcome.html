@@ -9,8 +9,10 @@
 <body>
     <div class="welcome-container">
         <h1 id="welcome-message"></h1>
+        <button id="roles-button">התפקידים שלך</button>
         <button id="identify-button" style="display: none;">לחץ לזהות מחבלים</button>
         <p id="terrorist-count"></p>
+        <button id="logout-button">יציאה מהאתר</button>
     </div>
     <div id="rank" class="rank-container"></div>
     <script>
@@ -29,14 +31,32 @@
         }
 
         // Identify terrorists button click event
+        let lastClickTime = 0;
         document.getElementById('identify-button').addEventListener('click', function() {
-            const terroristCount = Math.floor(Math.random() * 21);
-            const message = terroristCount === 0 ? 'אין מחבלים' : `מספר המחבלים: ${terroristCount}`;
+            const currentTime = Date.now();
+            const timeSinceLastClick = currentTime - lastClickTime;
+            const cooldownTime = 2 * 60 * 1000; // 2 minutes in milliseconds
+
+            if (timeSinceLastClick < cooldownTime) {
+                const timeLeft = Math.ceil((cooldownTime - timeSinceLastClick) / 1000);
+                document.getElementById('terrorist-count').textContent = `עליך להמתין עוד ${timeLeft} שניות.`;
+                return;
+            }
+
+            lastClickTime = currentTime;
+            const terroristCount = Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 21);
+            const message = terroristCount === 0 ? 'לא זוהו מחבלים' : `מספר המחבלים: ${terroristCount}`;
             document.getElementById('terrorist-count').textContent = message;
-            document.getElementById('identify-button').disabled = true;
-            setTimeout(() => {
-                document.getElementById('identify-button').disabled = false;
-            }, 30000); // 30 seconds
+        });
+
+        // Roles button click event
+        document.getElementById('roles-button').addEventListener('click', function() {
+            window.location.href = `roles.html?username=${username}`;
+        });
+
+        // Logout button click event
+        document.getElementById('logout-button').addEventListener('click', function() {
+            window.location.href = 'index.html';
         });
     </script>
 </body>

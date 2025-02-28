@@ -9,7 +9,7 @@ body {
     direction: rtl;
 }
 
-.login-container, .welcome-container {
+.login-container, .welcome-container, .roles-container {
     text-align: center;
     background-color: #fff;
     padding: 30px;
@@ -51,6 +51,7 @@ button {
     background-color: #28a745;
     color: #fff;
     transition: background-color 0.3s;
+    margin-top: 10px;
 }
 
 button:hover {
@@ -64,9 +65,23 @@ button:hover {
 }
 
 .rank-container {
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 10px;
     font-size: 1.2em;
     color: #333;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    font-size: 1.2em;
+    margin: 10px 0;
 }
