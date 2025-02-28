@@ -11,10 +11,19 @@ document.getElementById('login-form').addEventListener('submit', function(event)
         'אלעד': '2013'
     };
 
+    // User ranks
+    const ranks = {
+        'סיון': 'פקיד',
+        'נועה': 'מנהל',
+        'ינאי': 'רמטכ"ל',
+        'אלעד': 'רמטכ"ל'
+    };
+
     // Validate user
     if (users[username] && users[username] === password) {
-        // Redirect to the welcome page with the username as a URL parameter
-        window.location.href = `welcome.html?username=${username}`;
+        // Redirect to the welcome page with the username and rank as URL parameters
+        const rank = ranks[username];
+        window.location.href = `welcome.html?username=${username}&rank=${rank}`;
     } else {
         document.getElementById('message').textContent = 'שם משתמש או סיסמה שגויים.';
     }

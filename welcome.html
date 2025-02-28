@@ -9,14 +9,35 @@
 <body>
     <div class="welcome-container">
         <h1 id="welcome-message"></h1>
+        <button id="identify-button" style="display: none;">לחץ לזהות מחבלים</button>
+        <p id="terrorist-count"></p>
     </div>
+    <div id="rank" class="rank-container"></div>
     <script>
-        // Get the username from the URL parameters
+        // Get the username and rank from the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const username = urlParams.get('username');
+        const rank = urlParams.get('rank');
 
         // Display the welcome message
         document.getElementById('welcome-message').textContent = `מה תרצה לעשות היום, ${username}?`;
+        document.getElementById('rank').textContent = `התפקיד שלך: ${rank}`;
+
+        // Show the identify button for Noa and Elad
+        if (username === 'נועה' || username === 'אלעד') {
+            document.getElementById('identify-button').style.display = 'block';
+        }
+
+        // Identify terrorists button click event
+        document.getElementById('identify-button').addEventListener('click', function() {
+            const terroristCount = Math.floor(Math.random() * 21);
+            const message = terroristCount === 0 ? 'אין מחבלים' : `מספר המחבלים: ${terroristCount}`;
+            document.getElementById('terrorist-count').textContent = message;
+            document.getElementById('identify-button').disabled = true;
+            setTimeout(() => {
+                document.getElementById('identify-button').disabled = false;
+            }, 30000); // 30 seconds
+        });
     </script>
 </body>
 </html>
